@@ -44,13 +44,13 @@ const handler = NextAuth({
   callbacks: {
     jwt({ account, token, user, profile, session }) {
       if (user) token.user = user;
-      console.log(token);
       return token;
     },
-    session({ session, token }) {
+    session({ session, token, user }) {
       // Return a cookie value as part of the session
       // This is read when `req.query.nextauth.includes("session") && req.method === "GET"`
 
+      session.accessToken = token.accessToken;
       session.user = token.user;
       return session;
     },

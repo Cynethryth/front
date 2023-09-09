@@ -3,8 +3,11 @@ import React, { useState } from "react";
 import style from "@/styles/Login.module.css";
 import axios from "axios";
 import Head from "next/head";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
+  const router = useRouter();
   const [User, setUser] = useState({
     Name: "",
     Surname: "",
@@ -12,22 +15,27 @@ export default function Login() {
     Email: "",
     Password: "",
   });
-  const login = (e) => {
+  const login = async (e) => {
     e.preventDefault();
-    axios
+    await axios
       .post(`http://localhost:5000/login/register`, {
         data: User,
       })
-      .then((response) => {
-        console.log(response.data);
+      .then(async (response) => {
+        const res = await signIn("credentials", {
+          email: User.Email,
+          password: User.Password,
+          redirect: false,
+        });
 
+        if (res?.ok) router.push("/");
       });
   };
 
   return (
     <div className={style.float}>
       <Head>
-        <title>Login</title>
+        <title>Registro</title>
       </Head>
       <div className={style.section}>
         <div className={style.imgBx}>
@@ -35,7 +43,7 @@ export default function Login() {
         </div>
         <div className={style.contentBx}>
           <div className={style.formBx}>
-            <h2>Log In</h2>
+            <h2>Registro</h2>
             <form>
               <div className={style.inputBx}>
                 <input
@@ -103,16 +111,11 @@ export default function Login() {
                   onClick={(e) => {
                     login(e);
                   }}
-                  value={"Sign In"}
+                  value={"Registrarme"}
                 />
               </div>
-              <div className={style.inputBx}>
-                <p>
-                  Don&apos;t have account? <a href="/Register">Sign Up</a>
-                </p>
-              </div>
             </form>
-            <h3>Log in with:</h3>
+            <h3>Proximamente:</h3>
             <ul className={style.sci}>
               <li>
                 <img src="https://cdn-icons-png.flaticon.com/512/59/59439.png" />

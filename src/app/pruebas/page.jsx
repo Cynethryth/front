@@ -1,33 +1,26 @@
-"use client";
-import axios from "axios";
-import { signOut, useSession } from "next-auth/react";
-import React from "react";
+import { getSession } from "next-auth/react";
 
-export default function page() {
-  const { data, status } = useSession();
-  const submit = () => {
-    console.log(data, status);
-  };
 
-  const submit2 = () => {
-    signOut()
+async function getData(context) {
+  const session = await getSession(context);
+
+  if (!session) {
+    // Redirect or handle unauthenticated user
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  }
+  return {
+    hola: "123",
+    session
   };
-  return (
-    <div>
-      <button
-        onClick={() => {
-          submit();
-        }}
-      >
-        Enviar!
-      </button>
-      <button
-        onClick={() => {
-          submit2();
-        }}
-      >
-        Cerrar Sesion!
-      </button>
-    </div>
-  );
+}
+
+export default async function Page() {
+  const data = await getData();
+
+  return <main>{JSON.stringify(data.session)}</main>;
 }

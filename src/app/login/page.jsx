@@ -51,7 +51,7 @@ export default function Login() {
         </div>
         <div className={style.contentBx}>
           <div className={style.formBx}>
-            <h2>Log In</h2>
+            <h2>Iniciar Sesion</h2>
             <form>
               <div className={style.inputBx}>
                 <span>Email</span>
@@ -89,16 +89,16 @@ export default function Login() {
                   onClick={(e) => {
                     login(e);
                   }}
-                  value={"Sign In"}
+                  value={"Iniciar Sesion"}
                 />
               </div>
               <div className={style.inputBx}>
                 <p>
-                  Don&apos;t have account? <a href="/Register">Sign Up</a>
+                  Don&apos;t have account? <a href="/register">Sign Up</a>
                 </p>
               </div>
             </form>
-            <h3>Log in with:</h3>
+            <h3>Proximamente</h3>
             <ul className={style.sci}>
               <li>
                 <img src="https://cdn-icons-png.flaticon.com/512/59/59439.png" />
